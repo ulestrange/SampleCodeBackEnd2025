@@ -2,6 +2,7 @@ import express, {Application, Request, Response} from "express" ;
 import morgan from "morgan";
 import userRoutes from './routes/users';
 import dotenv from 'dotenv';
+import { initDb } from './database';
 
 
 dotenv.config();
@@ -10,6 +11,8 @@ const PORT = process.env.PORT || 3001;
 
 
 const app: Application = express();
+
+initDb()
 
 app.use(express.json());
 
