@@ -1,10 +1,13 @@
 import express, {Application, Request, Response} from "express" ;
 import morgan from "morgan";
+import userRoutes from './routes/users';
 
-const PORT = process.env.PORT || 7000;
+
+const PORT = process.env.PORT || 3000;
 
 const app: Application = express();
 
+app.use(express.json());
 
 
 app.get("/ping", async (_req : Request, res: Response) => {
@@ -14,6 +17,8 @@ app.get("/ping", async (_req : Request, res: Response) => {
 });
 
 app.use(morgan("tiny"));
+
+app.use('/api/v1/users', userRoutes)
 
 app.get("/bananas", async (_req : Request, res: Response) => {
     res.json({
