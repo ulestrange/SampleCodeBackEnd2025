@@ -15,3 +15,12 @@ content-type: application/json
 GET  http://localhost:3000/api/v1/users HTTP/1.1
 content-type: application/json
 
+
+###
+GET  http://localhost:3000/api/v1/users/68d155772217c29991386e91 HTTP/1.1
+content-type: application/json
+
+###
+DELETE  http://localhost:3000/api/v1/users/68d12fb15d574dd3723fe432 HTTP/1.1
+content-type: application/json
+
