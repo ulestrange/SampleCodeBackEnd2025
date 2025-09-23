@@ -6,7 +6,7 @@ content-type: application/json
 
 { "name" : "John Doe",
    "phonenumber" : "0871234567",
-   "bullshit" : "bull"
+   "bullshit" : "none"
   }
 
 
