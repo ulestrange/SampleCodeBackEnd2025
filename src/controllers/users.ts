@@ -42,6 +42,7 @@ export const createUser = async (req: Request, res: Response) => {
   const newUser = req.body as User; // note this is not a secure practice but will do for now.
 
 
+
   try {
     const result = await collections.users?.insertOne(newUser)
 
@@ -52,7 +53,7 @@ export const createUser = async (req: Request, res: Response) => {
       res.status(500).send("Failed to create a new user.");
     }
   }
-  catch (error) {
+  catch (error ) {
     console.error(error);
     res.status(400).send(`Unable to create new user`);
   }
