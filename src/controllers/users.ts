@@ -80,7 +80,7 @@ export const updateUser = async (req: Request, res: Response) => {
 
   const { name,  phonenumber, email, dob } = req.body
   const newData : User = {name : name, phonenumber: phonenumber, email: email, dob : new Date(dob),
-    dateJoined: new Date(), lastUpdate : new Date()
+     lastUpdate : new Date()
   }
 
   try {
