@@ -53,10 +53,16 @@ export const createUser = async (req: Request, res: Response) => {
       res.status(500).send("Failed to create a new user.");
     }
   }
-  catch (error ) {
-    console.error(error);
-    res.status(400).send(`Unable to create new user`);
+   catch (error) {
+    if (error instanceof Error)
+    {
+     console.log(`issue with inserting ${error.message}`);
+    }
+    else{
+      console.log(`error with ${error}`)
+    }
   }
+
 };
 
 
@@ -82,7 +88,19 @@ export const deleteUser = async (req: Request, res: Response) => {
     } else if (!result.deletedCount) {
         res.status(404).json({message: `no user fround with id ${id}`});
     }
-} catch (error) {
+}    catch (error) {
+    // if (error instanceof Error)
+    // {
+    //  console.log(`issue with inserting ${error.message}`);
+    // }
+    // else{
+    //   console.log(`error with ${error}`)
+    // }
+      
     console.error(error);
-    res.status(400).send(error);
-}};
+    res.status(400).send(`Unable to create new user`);
+}
+
+  
+
+};
