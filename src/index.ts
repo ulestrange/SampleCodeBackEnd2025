@@ -3,6 +3,7 @@ import morgan from "morgan";
 import userRoutes from './routes/users';
 import dotenv from 'dotenv';
 import { initDb } from './database';
+import { authenticateKey } from "./middleware/auth.middleware";
 
 
 dotenv.config();
@@ -23,6 +24,8 @@ app.get("/ping", async (_req : Request, res: Response) => {
     });
 });
 
+
+//app.use(authenticateKey);
 app.use(morgan("tiny"));
 
 app.use('/api/v1/users', userRoutes)
