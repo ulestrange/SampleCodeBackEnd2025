@@ -4,27 +4,42 @@
 ###
 ### POST Request for a user
 ## Expected result is ........
+# @name postAUser
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
 
-{ "name" : "John Doe",
+{ "name" : "New User2",
    "phonenumber" : "0871234567",
-   "bullshit" : "none",
+   "email" : "john.doe@mymail.ie",
    "dob" : "01/01/2001"
   }
+  
+  
+###
 
-
+@newUserID = {{postAUser.response.headers.location}}
 
 ###
-GET  {{endpoint}} HTTP/1.1
+GET  {{endpoint}} HTTP/3.0
 content-type: application/json
 
 
 ###
-GET  {{endpoint}}/68d14d52b18dc797b2d4 HTTP/1.1
+GET  {{endpoint}}/{{newUserID}} HTTP/1.1
 content-type: application/json
 
 ###
 DELETE  {{endpoint}}/6b18dc797b2dfcbe4 HTTP/1.1
 content-type: application/json
 
+###
+
+PUT  {{endpoint}}/{{newUserID}} HTTP/1.1
+ content-type: application/json
+
+{
+  "_id": "68d5a71c794c006be4c59014",
+  "name": "New User2",
+  "phonenumber": "0871234567",
+  "dob": "2002-01-01T00:00:00.000Z"
+}
