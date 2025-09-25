@@ -5,6 +5,7 @@ export interface User {
     name: string;
     phonenumber: string;
     email: string;
-    dob: Date;
-
+    dob?: Date;
+    dateJoined? : Date,
+    lastUpdate?: Date
 }
