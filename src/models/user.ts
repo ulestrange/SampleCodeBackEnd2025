@@ -1,4 +1,5 @@
 import { ObjectId } from "mongodb";
+import { z } from 'zod';
 
 export interface User {
     id?: ObjectId;
@@ -9,3 +10,11 @@ export interface User {
     dateJoined? : Date,
     lastUpdate?: Date
 }
+
+
+export const CreateUserSchema = z.object({
+  name: z.string().min(1),
+  email: z.email(),
+  dob: z.date(),
+  phonenumber: z.string()
+});

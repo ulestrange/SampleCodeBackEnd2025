@@ -11,7 +11,8 @@ content-type: application/json
 { "name" : "New User10",
    "phonenumber" : "0871234567",
    "email" : "john.doe@mymail.ie",
-   "dob" : "01/01/2001"
+   "dob" : "01/01/2001",
+   "silly": "this is not just silly but dangerous"
   }
   
   

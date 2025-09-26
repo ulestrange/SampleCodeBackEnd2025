@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { collections } from '../database';
-import { User } from '../models/user'
+import { User, CreateUserSchema } from '../models/user'
 import { ObjectId } from 'mongodb'
 
 export const getUsers = async (req: Request, res: Response) => {
@@ -46,8 +46,18 @@ export const createUser = async (req: Request, res: Response) => {
 
   console.log(req.body); //for now still log the data
 
-    const { name,  phonenumber, email, dob } = req.body
-  const newUser : User = {name : name, phonenumber: phonenumber, email: email, dob : new Date(dob),
+  
+  const validation = CreateUserSchema.safeParse(req.body);
+
+  if (!validation.success) {
+    return res.status(400).json({
+      message: 'Validation failed',
+      errors: validation.error.format(),
+    });
+  }
+
+    const { name,  phonenumber, email, dob } = req.body;
+    const newUser : User = {name : name, phonenumber: phonenumber, email: email, dob : new Date(dob),
     dateJoined: new Date(), lastUpdate : new Date()}
 
 
