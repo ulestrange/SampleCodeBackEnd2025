@@ -1,8 +1,9 @@
-import express, {Application, Request, Response} from "express" ;
+import express, { Application, Request, Response } from "express";
 import morgan from "morgan";
 import userRoutes from './routes/users';
 import dotenv from 'dotenv';
 import { initDb } from './database';
+import { authenticateKey } from "./middleware/auth.middleware";
 
 
 dotenv.config();
@@ -17,22 +18,29 @@ initDb()
 app.use(express.json());
 
 
-app.get("/ping", async (_req : Request, res: Response) => {
+app.get("/ping", async (_req: Request, res: Response) => {
     res.json({
-    message: "hello from Una - changed",
+        message: "hello from Una - changed",
     });
 });
 
+
+//app.use(authenticateKey);
 app.use(morgan("tiny"));
 
 app.use('/api/v1/users', userRoutes)
 
-app.get("/bananas", async (_req : Request, res: Response) => {
+app.get("/bananas", async (_req: Request, res: Response) => {
     res.json({
-    message: "hello this is bananas",
+        message: "hello this is bananas",
     });
 });
 
-app.listen(PORT, () => {
-    console.log("Server is running on port", PORT);
-    });
+app.listen(PORT, (error) => {
+    if (error) {
+        console.error("Error starting server:", error.message);
+        process.exit(1); // Exit the process with an error code
+    } else {
+        console.log("Server is running on port", PORT);
+    }
+});
