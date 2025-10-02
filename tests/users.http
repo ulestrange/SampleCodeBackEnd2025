@@ -8,10 +8,11 @@
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
 
-{ "name" : "New User10",
+{ "name" : "{$ne : null}",
    "phonenumber" : "0871234567",
    "email" : "john.doe@mymail.ie",
-   "dob" : "01/01/2001"
+   "dob" : "2001/01/12",
+   "silly": "this is not just silly but dangerous"
   }
   
   
