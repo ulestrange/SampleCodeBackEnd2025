@@ -11,7 +11,7 @@ dotenv.config();
 const PORT = process.env.PORT || 3001;
 
 
-const app: Application = express();
+export const app: Application = express();
 
 initDb()
 
@@ -20,7 +20,7 @@ app.use(express.json());
 
 app.get("/ping", async (_req: Request, res: Response) => {
     res.json({
-        message: "hello from Una - changed",
+        message: "hello from Una",
     });
 });
 
