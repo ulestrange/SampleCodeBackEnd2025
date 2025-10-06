@@ -1,8 +1,10 @@
 import { app } from './index';
 import dotenv from 'dotenv';
 
-const PORT = process.env.PORT || 3001;
 
+dotenv.config();
+
+const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, (error) => {
     if (error) {

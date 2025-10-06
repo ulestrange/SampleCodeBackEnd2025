@@ -1,7 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import morgan from "morgan";
 import userRoutes from './routes/users';
-import dotenv from 'dotenv';
+
 import { initDb } from './database';
 import { authenticateKey } from "./middleware/auth.middleware";
 

@@ -47,17 +47,8 @@ export const createUser = async (req: Request, res: Response) => {
   console.log(req.body); //for now still log the data
 
   
-  const validation = createUserSchema.safeParse(req.body);
 
-  if (!validation.success) {
-    return res.status(400).json({
-      message: 'Validation failed',
-      errors: validation.error.issues
-    });
-  }
-
-
-    const { name,  phonenumber, email, dob } = validation.data;
+    const { name,  phonenumber, email, dob } = req.body;
   const newUser : User = {name : name, phonenumber: phonenumber, email: email, dob : dob,
     dateJoined: new Date(), lastUpdate : new Date()}
 
