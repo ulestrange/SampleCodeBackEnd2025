@@ -17,7 +17,7 @@ describe('Date of Birth Validation', () => {
     });
 
 
-    it('should fail for the un parasable date 45/12/2023', () => {
+    it('should fail for the unparsable date 45/12/2023', () => {
 
 
         expect(() => createUserSchema.parse(
