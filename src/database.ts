@@ -44,6 +44,7 @@ export async function initDb(): Promise<void> {
 
 
 
+
 export async function closeDb(): Promise<void> {
     await client.close();
     console.log('Database connection closed');

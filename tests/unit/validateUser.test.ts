@@ -45,6 +45,7 @@ describe('Date of Birth Validation', () => {
         const invalidDates = [
             '2026ty/01/02',         // wrong year
             '2000/13/01',          // wrong month
+            '09/10/2026',          // in the future
             '1st march 20121',      // wrong date
             'blah balh',     // wrong wrong wrong
         ];
