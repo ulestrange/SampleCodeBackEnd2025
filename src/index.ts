@@ -6,10 +6,6 @@ import { initDb } from './database';
 import { authenticateKey } from "./middleware/auth.middleware";
 
 
-dotenv.config();
-
-const PORT = process.env.PORT || 3001;
-
 
 export const app: Application = express();
 
@@ -36,11 +32,4 @@ app.get("/bananas", async (_req: Request, res: Response) => {
     });
 });
 
-app.listen(PORT, (error) => {
-    if (error) {
-        console.error("Error starting server:", error.message);
-        process.exit(1); // Exit the process with an error code
-    } else {
-        console.log("Server is running on port", PORT);
-    }
-});
+
