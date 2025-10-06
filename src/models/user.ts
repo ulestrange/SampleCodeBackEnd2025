@@ -15,7 +15,8 @@ export interface User {
 export const createUserSchema = z.object({
     name: z.string().min(1),
     email: z.email(),
-    dob: z.coerce.date().max(() => new Date()),
+    dob: z.coerce.date().refine(date => date <= new Date(), {
+  message: "Date of birth cannot be in the future",}),
     phonenumber: z.string()
 });
 
