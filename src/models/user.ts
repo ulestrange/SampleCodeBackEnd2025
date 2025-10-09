@@ -18,8 +18,8 @@ export const createUserSchema = z.object({
     dob: z.coerce.date().refine(date => date <= new Date(), {
   message: "Date of birth cannot be in the future",}),
     phonenumber: z.string().
-    regex(/^09[3-9]\d{7}$/, {
-  message: "Invalid Irish mobile number. Must start with 09 followed by 3–9 and 7 digits."})
+ regex(/^08[3-9]\d{7}$/, {
+  message: "Invalid Irish mobile number. Must start with 08followed by 3–9 and 7 digits."})
 
 });
 
@@ -29,6 +29,6 @@ export const updateUserSchema = z.object({
   dob: z.coerce.date().refine(date => date <= new Date(), {
   message: "Date of birth cannot be in the future",}),
     phonenumber: z.string().
-    regex(/^09[3-9]\d{7}$/, {
+    regex(/^08[3-9]\d{7}$/, {
   message: "Invalid Irish mobile number. Must start with 09 followed by 3–9 and 7 digits."})
 });

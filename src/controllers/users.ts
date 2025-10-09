@@ -90,11 +90,13 @@ export const updateUser = async (req: Request, res: Response) => {
     const query = { _id: new ObjectId(id) };
     const result = await collections.users?.updateOne(query, { $set: newData });
 
+    console.table (result)
+
     if (result) {
       if (result.modifiedCount > 0) {
         res.status(200).json({ message: `Updated User` })
       }
-      else if (result.matchedCount = 0) {
+      else if (result.matchedCount == 1) {
         res.status(400).json({ message: `User found but no update` });
       }
       else {
