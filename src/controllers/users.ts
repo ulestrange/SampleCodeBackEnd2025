@@ -128,7 +128,7 @@ export const deleteUser = async (req: Request, res: Response) => {
     const result = await collections.users?.deleteOne(query);
 
     if (result && result.deletedCount) {
-      res.status(202).json({ message: `Successfully removed user with id ${id}` });
+      res.status(204).json({ message: `Successfully removed user with id ${id}` });
     } else if (!result) {
       res.status(400).json({ message: `Failed to remove user with id ${id}` });
     } else if (result.deletedCount == 0) {
