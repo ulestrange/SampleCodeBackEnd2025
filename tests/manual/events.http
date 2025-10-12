@@ -1,0 +1,64 @@
+@endpoint =http://localhost:3000/api/v1/events
+
+###
+### POST Request for a event
+## Expected result is ........
+# @name postnEvent
+POST {{endpoint}} HTTP/1.1
+content-type: application/json
+
+{
+    "userId": "68d14e43cf8a9f42c91c5236",
+    "title": "Event 3",
+    "description": "Description for event 3",
+    "date": 
+       "2013-09-01T00:00:00Z"
+    ,
+    "location": "Location 3",
+    "attendees": [
+      {
+        "name": "Attendee 1",
+        "email": "attendee1@example.com",
+        "rsvp": "no"
+      },
+      {
+        "name": "Attendee 2",
+        "email": "attendee2@example.com",
+        "rsvp": "yes"
+      },
+      {
+        "name": "Attendee 3",
+        "email": "attendee3@example.com",
+        "rsvp": "yes"
+      },
+      {
+        "name": "Attendee 4",
+        "email": "attendee4@example.com",
+        "rsvp": "yes"
+      },
+      {
+        "name": "Attendee 5",
+        "email": "attendee5@example.com",
+        "rsvp": "yes"
+      }
+    ]
+  }
+
+###
+
+
+GET {{endpoint}}/68ec11abf55cd0c18263de28
+
+
+###
+
+
+    
+POST {{endpoint}}/68ec11abf55cd0c18263de28/attendees HTTP/1.1
+content-type: application/json
+
+      {
+        "name": "this is new",
+        "email": "attendee5@example.com",
+        "rsvp": "yes"
+      }

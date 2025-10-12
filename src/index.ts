@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import morgan from "morgan";
 import userRoutes from './routes/users';
+import eventRoutes from './routes/events';
 
 import { initDb } from './database';
 import { authenticateKey } from "./middleware/auth.middleware";
@@ -25,6 +26,8 @@ app.get("/ping", async (_req: Request, res: Response) => {
 app.use(morgan("tiny"));
 
 app.use('/api/v1/users', userRoutes)
+
+app.use('/api/v1/events', eventRoutes)
 
 app.get("/bananas", async (_req: Request, res: Response) => {
     res.json({

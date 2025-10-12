@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { collections } from '../database';
-import { User, createUserSchema } from '../models/user'
+import { User } from '../models/user'
 import { ObjectId } from 'mongodb'
 
 export const getUsers = async (req: Request, res: Response) => {
