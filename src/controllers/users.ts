@@ -50,7 +50,7 @@ export const createUser = async (req: Request, res: Response) => {
 
     const { name,  phonenumber, email, dob } = req.body;
   const newUser : User = {name : name, phonenumber: phonenumber, email: email, dob : dob,
-    dateJoined: new Date(), lastUpdate : new Date()}
+    dateJoined: new Date(), lastUpdated : new Date()}
 
 
 
@@ -80,9 +80,9 @@ export const updateUser = async (req: Request, res: Response) => {
 
   const id: string = req.params.id;
 
-  const { name,  phonenumber, email, dob } = req.body
-  const newData : User = {name : name, phonenumber: phonenumber, email: email, dob : new Date(dob),
-     lastUpdate : new Date()
+  const { name,  phonenumber,  dob } = req.body
+  const newData : Partial<User> = {name : name, phonenumber: phonenumber,  dob : dob,
+     lastUpdated : new Date()
   }
 
   try {
@@ -90,12 +90,14 @@ export const updateUser = async (req: Request, res: Response) => {
     const query = { _id: new ObjectId(id) };
     const result = await collections.users?.updateOne(query, { $set: newData });
 
+    console.table (result)
+
     if (result) {
       if (result.modifiedCount > 0) {
         res.status(200).json({ message: `Updated User` })
       }
-      else if (result.matchedCount = 0) {
-        res.status(400).json({ message: `Failed to update user.` });
+      else if (result.matchedCount == 1) {
+        res.status(400).json({ message: `User found but no update` });
       }
       else {
         res.status(404).json({ "Message": `${id} not found ` });
@@ -126,11 +128,11 @@ export const deleteUser = async (req: Request, res: Response) => {
     const result = await collections.users?.deleteOne(query);
 
     if (result && result.deletedCount) {
-      res.status(202).json({ message: `Successfully removed user with id ${id}` });
+      res.status(204).json({ message: `Successfully removed user with id ${id}` });
     } else if (!result) {
       res.status(400).json({ message: `Failed to remove user with id ${id}` });
-    } else if (!result.deletedCount) {
-      res.status(404).json({ message: `no user fround with id ${id}` });
+    } else if (result.deletedCount == 0) {
+      res.status(404).json({ message: `no user found with id ${id}` });
     }
   } catch (error) {
     if (error instanceof Error) {
