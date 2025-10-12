@@ -132,7 +132,7 @@ export const deleteUser = async (req: Request, res: Response) => {
     } else if (!result) {
       res.status(400).json({ message: `Failed to remove user with id ${id}` });
     } else if (result.deletedCount == 0) {
-      res.status(404).json({ message: `no user fround with id ${id}` });
+      res.status(404).json({ message: `no user found with id ${id}` });
     }
   } catch (error) {
     if (error instanceof Error) {
