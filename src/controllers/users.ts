@@ -5,14 +5,24 @@ import { ObjectId } from 'mongodb'
 
 export const getUsers = async (req: Request, res: Response) => {
 
+    const rawFilter = req.query.filter;
+    let filterObj = {};
+
+    if (typeof rawFilter === 'string') {
+      try {
+        filterObj = JSON.parse(rawFilter);
+      } catch (err) {
+        console.error("Invalid filter JSON:", err);
+        return res.status(400).json({ error: "Invalid filter format" });
+      }
+    }
+
   try {
-
-    const users = (await collections.users?.find({}).toArray()) as unknown as User[];
+    const users = await collections.users?.find(filterObj).toArray();
     res.json(users);
-
   } catch (error) {
     if (error instanceof Error) {
-      console.error(`Issue with GET $(error.message)`)
+      console.error(`Issue with GET ${error.message}`)
     }
     res.status(500).json({ 'error': 'get failed' });
   }
@@ -46,11 +56,13 @@ export const createUser = async (req: Request, res: Response) => {
 
   console.log(req.body); //for now still log the data
 
-  
 
-    const { name,  phonenumber, email, dob } = req.body;
-  const newUser : User = {name : name, phonenumber: phonenumber, email: email, dob : dob,
-    dateJoined: new Date(), lastUpdated : new Date()}
+
+  const { name, phonenumber, email, dob } = req.body;
+  const newUser: User = {
+    name: name, phonenumber: phonenumber, email: email, dob: dob,
+    dateJoined: new Date(), lastUpdated: new Date()
+  }
 
 
 
@@ -80,17 +92,18 @@ export const updateUser = async (req: Request, res: Response) => {
 
   const id: string = req.params.id;
 
-  const { name,  phonenumber,  dob } = req.body
-  const newData : Partial<User> = {name : name, phonenumber: phonenumber,  dob : dob,
-     lastUpdated : new Date()
+  const { name, phonenumber, dob } = req.body
+  const newData: Partial<User> = {
+    name: name, phonenumber: phonenumber, dob: dob,
+    lastUpdated: new Date()
   }
 
   try {
-  
+
     const query = { _id: new ObjectId(id) };
     const result = await collections.users?.updateOne(query, { $set: newData });
 
-    console.table (result)
+    console.table(result)
 
     if (result) {
       if (result.modifiedCount > 0) {

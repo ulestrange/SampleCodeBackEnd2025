@@ -24,6 +24,13 @@ content-type: application/json
 GET  {{endpoint}} HTTP/3.0
 content-type: application/json
 
+###
+GET  {{endpoint}}?filter={"name":"John Doe"} HTTP/3.0
+content-type: application/json
+
+###
+GET  {{endpoint}}?filter={"phonenumber":{"$regex":"087","$options":"i"}} HTTP/3.0
+content-type: application/json
 
 ###
 GET  {{endpoint}}/{{newUserID}} HTTP/1.1

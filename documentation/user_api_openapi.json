@@ -8,6 +8,37 @@
     "/": {
       "get": {
         "summary": "Get all users",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Filter users by name",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of users to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Number of users to skip",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "List of users",
@@ -109,17 +140,15 @@
                 "schema": {
                   "$ref": "#/components/schemas/User"
                 }
-                
               }
             }
           },
-           "404": {
+          "404": {
             "description": "User not found"
           },
           "400": {
             "description": "Invalid data"
           }
-          
         }
       },
       "delete": {
