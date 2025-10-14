@@ -9,12 +9,12 @@ content-type: application/json
 
 {
     "userId": "68d14e43cf8a9f42c91c5236",
-    "title": "Event 3",
-    "description": "Description for event 3",
+    "title": "Class",
+    "description": "Happens every week - it is fun",
     "date": 
-       "2013-09-01T00:00:00Z"
+       "202025-10-015T00:00:00Z"
     ,
-    "location": "Location 3",
+    "location": "Beside the birds",
     "attendees": [
       {
         "name": "Attendee 1",
@@ -58,7 +58,19 @@ POST {{endpoint}}/68ec11abf55cd0c18263de28/attendees HTTP/1.1
 content-type: application/json
 
       {
-        "name": "this is new",
-        "email": "attendee5@example.com",
-        "rsvp": "yes"
+        "name": "very new",
+        "email": "attendee5@example2.com",
+        "rsvp": "maybe"
+      }
+
+###
+
+# valid ObjectID but not in events collection
+POST {{endpoint}}/68d14e43cf8a9f42c91c5236/attendees HTTP/1.1
+content-type: application/json
+
+      {
+        "name": "new now",
+        "email": "attend@gmail.com",
+        "rsvp": "maybe"
       }
