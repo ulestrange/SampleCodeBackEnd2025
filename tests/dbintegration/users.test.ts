@@ -60,7 +60,7 @@ describe('User API', () => {
     test('should delete the created user by ID', async () => {
         const res = await request(app)
             .delete(`/api/v1/users/${userId}`)
-            .expect(202);
+            .expect(204);
     });
 
     test('should fail to find the deleted user by ID', async () => {

@@ -5,20 +5,58 @@ import { ObjectId } from 'mongodb'
 
 export const getUsers = async (req: Request, res: Response) => {
 
-    const rawFilter = req.query.filter;
-    let filterObj = {};
+    const { email, name, page, pagesize } = req.query;
 
-    if (typeof rawFilter === 'string') {
-      try {
-        filterObj = JSON.parse(rawFilter);
-      } catch (err) {
-        console.error("Invalid filter JSON:", err);
-        return res.status(400).json({ error: "Invalid filter format" });
-      }
-    }
+
+    let filter : any = {}
+
+
+    if (email) filter.email = email;
+    if (name) filter.name = { $regex: `${name}`, $options: 'i' }
+    
+    console.table (filter)
+    
+    //{ $regex: new RegExp(name as string, "i") };
+
+
+       // const { filter } = req.query;
+
+    // If "page" and "pageSize" are not sent we will default them to 1 and 0 (no limit)
+
+    const pageInt = parseInt(page as string) || 1;
+    const pagesizeInt = parseInt(pagesize as string) || 0;
+
+
+
+  // if (req.params.name)
+  // {
+  //   filterObj.name = { $regex: `${name}`, $options: 'i' }
+  // }
+
+
+
+  // this code is used to test what happens on the client side 
+  //   setTimeout(() => {
+  //  console.log("This runs after 3 seconds");
+  //   return res.json([] );
+  //   }, 1000);
+
+   
+
+
 
   try {
-    const users = await collections.users?.find(filterObj).toArray();
+    //const users = await collections.users?.find(filterObj).toArray();
+
+
+    const users = (await collections.users?.find(filter)
+      //.project({ name: 1,  _id: 0 })
+   // .sort({ email: 1 })
+      .skip((pageInt - 1) * pagesizeInt)
+      .limit(pagesizeInt)
+      .toArray()) as User[];
+
+
     res.json(users);
   } catch (error) {
     if (error instanceof Error) {
@@ -32,8 +70,46 @@ export const getUserById = async (req: Request, res: Response) => {
   //get a single  user by ID from the database
 
   let id: string = req.params.id;
+  
   try {
+
+
+    const newId = new ObjectId();
+    const isValid = ObjectId.isValid("string")
+
+    const newId2 = new ObjectId(newId.id)
+
+    console.log( newId === newId2)
+    console.log( newId == newId2)
+    console.log( newId.equals(newId2))
+
+    
+
+
+    const timeCreated  = newId.getTimestamp();
+
+
+    
+    const id1 = new ObjectId("123456789123456789001234");
+        const id2 = new ObjectId("A23456789123C56789001234")
+            const id3 = new ObjectId("B234567891D3456789001234")
+                const id4 = new ObjectId("D234567891E3456789001234")
+                    const id5 = new ObjectId("D234567891F3456789001234")
+
+                    console.log(id1);
+                    console.log(id2);
+                    console.log(id3);
+                    console.log(id4);
+                    console.log(id5);
+                    console.log(id5.getTimestamp())
+
+                    console.log (ObjectId.isValid('FFFFFFFFFFFFFFFFFFFFFFFF'))
+
+
     const query = { _id: new ObjectId(id) };
+
+    console.log(query);
+    console.log(query._id.getTimestamp())
     const user = (await collections.users?.findOne(query)) as unknown as User;
 
     if (user) {
@@ -58,9 +134,10 @@ export const createUser = async (req: Request, res: Response) => {
 
 
 
-  const { name, phonenumber, email, dob } = req.body;
+  const { name, phonenumber, email, dob, tags } = req.body;
   const newUser: User = {
     name: name, phonenumber: phonenumber, email: email, dob: dob,
+    tags : tags,
     dateJoined: new Date(), lastUpdated: new Date()
   }
 
@@ -92,10 +169,11 @@ export const updateUser = async (req: Request, res: Response) => {
 
   const id: string = req.params.id;
 
-  const { name, phonenumber, dob } = req.body
+  const { name, phonenumber, dob, tags } = req.body
   const newData: Partial<User> = {
     name: name, phonenumber: phonenumber, dob: dob,
-    lastUpdated: new Date()
+    lastUpdated: new Date(),
+    tags : tags
   }
 
   try {

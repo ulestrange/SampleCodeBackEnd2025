@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://api.eventsapp.com/v1"
+      "url": "http://localhost:3001/api/v1"
     }
   ],
   "paths": {

@@ -1,5 +1,5 @@
 
-@endpoint =http://localhost:3000/api/v1/users
+@endpoint =http://localhost:3001/api/v1/users
 
 ###
 ### POST Request for a user
@@ -8,20 +8,27 @@
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
 
-{ "name" : "{$ne : null}",
-   "phonenumber" : "0871234567dfasfasf",
+{ "name" : "una",
+   "phonenumber" : "0871234567",
    "email" : "john.doe@mymail.ie",
-   "dob" : "2001/01/12gfggggfsdg",
-   "silly": "this is not just silly but dangerous"
+   "dob" : "2001/01/12",
+   "silly": "this is not just silly but dangerous",
+   "role" : "staff",
+   "tags" : ["lovely", "person", "sometimes"]
   }
   
   
 ###
 
 @newUserID = {{postAUser.response.headers.location}}
+//@newUserID = 691a0bb4e06a8574e357f51c
 
 ###
 GET  {{endpoint}} HTTP/3.0
+content-type: application/json
+
+###
+GET  {{endpoint}}/{{newUserID}} HTTP/3.0
 content-type: application/json
 
 ###
@@ -49,5 +56,10 @@ PUT  {{endpoint}}/{{newUserID}} HTTP/1.1
   "_id": "68d5a71c794c006be4c59014",
   "name": "New User10-jio",
   "phonenumber": "0871234567",
-  "dob": "2002-01-01T00:00:00.000Z"
+  "dob": "2002-01-01T00:00:00.000Z",
+  "tags": [
+    "lovely",
+    "person",
+    "sometimes", "really"
+  ]
 }

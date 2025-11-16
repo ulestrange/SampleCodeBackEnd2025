@@ -3,11 +3,12 @@ import { z } from 'zod';
 
 
 export interface User {
-    id?: ObjectId;
+    _id?: ObjectId;
     name: string;
     phonenumber: string;
     email: string;
     dob?: Date;
+    tags?: string[],
     dateJoined?: Date,
     lastUpdated?: Date
 }
@@ -15,6 +16,7 @@ export interface User {
 export const createUserSchema = z.object({
     name: z.string().min(1),
     email: z.email(),
+    tags: z.array(z.string()),
     dob: z.coerce.date().refine(date => date <= new Date(), {
   message: "Date of birth cannot be in the future",}),
     phonenumber: z.string().
@@ -26,6 +28,7 @@ export const createUserSchema = z.object({
 
 export const updateUserSchema = z.object({
   name: z.string().min(1),
+  tags: z.array(z.string()),
   dob: z.coerce.date().refine(date => date <= new Date(), {
   message: "Date of birth cannot be in the future",}),
     phonenumber: z.string().
