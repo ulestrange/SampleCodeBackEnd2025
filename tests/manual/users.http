@@ -1,5 +1,5 @@
 
-@endpoint =http://localhost:3000/api/v1/users
+@endpoint =http://localhost:3001/api/v1/users
 
 ###
 ### POST Request for a user
@@ -8,11 +8,12 @@
 POST {{endpoint}} HTTP/1.1
 content-type: application/json
 
-{ "name" : "{$ne : null}",
-   "phonenumber" : "0871234567dfasfasf",
-   "email" : "john.doe@mymail.ie",
-   "dob" : "2001/01/12gfggggfsdg",
-   "silly": "this is not just silly but dangerous"
+{ "name" : "una3",
+   "phonenumber" : "0871234567",
+   "email" : "john.doe3@mymail.iecom",
+   "dob" : "2001/01/23",
+   "silly": "this is not just silly but dangerous",
+   "password" : "password"
   }
   
   

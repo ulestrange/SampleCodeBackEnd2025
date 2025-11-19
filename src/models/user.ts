@@ -9,7 +9,9 @@ export interface User {
     email: string;
     dob?: Date;
     dateJoined?: Date,
-    lastUpdated?: Date
+    lastUpdated?: Date,
+    password?: string,
+    hashedPassword?: string
 }
 
 export const createUserSchema = z.object({
@@ -19,7 +21,8 @@ export const createUserSchema = z.object({
   message: "Date of birth cannot be in the future",}),
     phonenumber: z.string().
  regex(/^08[3-9]\d{7}$/, {
-  message: "Invalid Irish mobile number. Must start with 08followed by 3–9 and 7 digits."})
+  message: "Invalid Irish mobile number. Must start with 08followed by 3–9 and 7 digits."}),
+  password: z.string()
 
 });
 

@@ -1,0 +1,45 @@
+
+@endpoint =http://localhost:3001/api/v1
+
+
+###
+### POST Request for a user
+## Expected result is ........
+# @name postAUser
+POST {{endpoint}}/users HTTP/1.1
+content-type: application/json
+
+{ "name" : "una3",
+   "phonenumber" : "0871234567",
+   "email" : "john.doe4@mymail.iecom",
+   "dob" : "2001/01/23",
+   "silly": "this is not just silly but dangerous",
+   "password" : "password"
+  }
+
+
+###
+poST {{endpoint}}/auth HTTP/1.1
+content-type: application/json
+
+{ 
+   "email" : "john.doe4@mymail.iecom",
+   "password" : "password"
+  }
+
+###
+poST {{endpoint}}/auth HTTP/1.1
+content-type: application/json
+
+{ 
+   "email" : "joh4@mymail.iecom",
+   "password" : "WRONGpassword"
+  }
+###
+GET {{endpoint}}/auth HTTP/1.1
+content-type: application/json
+
+{ 
+   "email" : "john.doe4@mymail.iecom",
+   "password" : "password"
+  }

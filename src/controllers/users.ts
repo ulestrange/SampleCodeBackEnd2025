@@ -2,6 +2,10 @@ import { Request, Response } from 'express';
 import { collections } from '../database';
 import { User, createUserSchema } from '../models/user'
 import { ObjectId } from 'mongodb'
+import * as argon2 from 'argon2';
+
+
+
 
 export const getUsers = async (req: Request, res: Response) => {
 
@@ -48,14 +52,34 @@ export const createUser = async (req: Request, res: Response) => {
 
   
 
-    const { name,  phonenumber, email, dob } = req.body;
+    const { name,  phonenumber, email, dob, hashedPassword } = req.body;
   const newUser : User = {name : name, phonenumber: phonenumber, email: email, dob : dob,
-    dateJoined: new Date(), lastUpdated : new Date()}
+    dateJoined: new Date(), lastUpdated : new Date() }
 
 
 
   try {
+
+        const existingUser = await collections.users?.findOne({email: req.body.email})
+
+    if (existingUser) {
+      res.status(400).json({"error": "existing email"});
+      return;
+    }
+
+    /// note - missing a check to verify the email belongs to the user
+    /// ideally we would email the user to conifrm that the email address
+    // belongs to them
+   
+    newUser.hashedPassword = await argon2.hash(req.body.password)
+
+    console.log(newUser.hashedPassword)
+
+ 
+
     const result = await collections.users?.insertOne(newUser)
+
+
 
     if (result) {
       res.status(201).location(`${result.insertedId}`).json({ message: `Created a new user with id ${result.insertedId}` })
