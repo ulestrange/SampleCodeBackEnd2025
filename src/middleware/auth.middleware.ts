@@ -20,7 +20,6 @@ export const validJWTProvided = async (
     next: NextFunction
 ) => {
 
-
     const authHeader = req.headers?.authorization;
 
     if (!authHeader || !authHeader?.startsWith('Bearer')) {
@@ -29,7 +28,6 @@ export const validJWTProvided = async (
         return;
     }
 
-
     const token: string | undefined = authHeader.split(' ')[1];
 
     if (!token) {
@@ -37,14 +35,13 @@ export const validJWTProvided = async (
         return;
     }
     const secret = process.env.JWTSECRET || "not very secret";
-
+    console.log(secret)
 
     try {
         console.log(token);
         const payload = jwtVerify(token, secret);
         res.locals.payload = payload;
         next();
-
 
     } catch (err) {
         res.status(403).send();

@@ -11,7 +11,7 @@ export const getUsers = async (req: Request, res: Response) => {
 
   try {
 
-    const users = (await collections.users?.find({}).toArray()) as unknown as User[];
+    const users = (await collections.users?.find({}).project({hashedPassword: 0}).toArray()) as unknown as User[];
     res.json(users);
 
   } catch (error) {
@@ -28,7 +28,7 @@ export const getUserById = async (req: Request, res: Response) => {
   let id: string = req.params.id;
   try {
     const query = { _id: new ObjectId(id) };
-    const user = (await collections.users?.findOne(query)) as unknown as User;
+    const user = (await collections.users?.findOne(query, {projection :{hashedPassord:0}})) as unknown as User;
 
     if (user) {
       res.status(200).send(user);
@@ -46,46 +46,31 @@ export const getUserById = async (req: Request, res: Response) => {
 };
 
 export const createUser = async (req: Request, res: Response) => {
-  // create a new user in the database
-
-  console.log(req.body); //for now still log the data
-
-  
-
-    const { name,  phonenumber, email, dob, hashedPassword } = req.body;
-  const newUser : User = {name : name, phonenumber: phonenumber, email: email, dob : dob,
-    dateJoined: new Date(), lastUpdated : new Date() }
-
-
-
+  const { name, phonenumber, email, dob, password } = req.body;
   try {
-
-        const existingUser = await collections.users?.findOne({email: req.body.email})
+    const existingUser = await collections.users?.findOne({ email: req.body.email })
 
     if (existingUser) {
-      res.status(400).json({"error": "existing email"});
+      res.status(400).json({ "error": "existing email" });
       return;
     }
 
     /// note - missing a check to verify the email belongs to the user
     /// ideally we would email the user to conifrm that the email address
     // belongs to them
-   
+
+    const newUser: User = {
+      name: name, phonenumber: phonenumber, email: email, dob: dob,
+      dateJoined: new Date(), lastUpdated: new Date()
+    }
     newUser.hashedPassword = await argon2.hash(req.body.password)
-
-    console.log(newUser.hashedPassword)
-
- 
-
     const result = await collections.users?.insertOne(newUser)
-
-
 
     if (result) {
       res.status(201).location(`${result.insertedId}`).json({ message: `Created a new user with id ${result.insertedId}` })
     }
     else {
-      res.status(500).send("Failed to create a new user.");
+      res.status(500).json({ "error": "Failed to create a new user." });
     }
   }
   catch (error) {
@@ -95,8 +80,8 @@ export const createUser = async (req: Request, res: Response) => {
     else {
       console.log(`error with ${error}`)
     }
+    res.status(500).json({ "error": "Failed to create a new user." });
   }
-
 };
 
 
@@ -104,17 +89,18 @@ export const updateUser = async (req: Request, res: Response) => {
 
   const id: string = req.params.id;
 
-  const { name,  phonenumber,  dob } = req.body
-  const newData : Partial<User> = {name : name, phonenumber: phonenumber,  dob : dob,
-     lastUpdated : new Date()
+  const { name, phonenumber, dob } = req.body
+  const newData: Partial<User> = {
+    name: name, phonenumber: phonenumber, dob: dob,
+    lastUpdated: new Date()
   }
 
   try {
-  
+
     const query = { _id: new ObjectId(id) };
     const result = await collections.users?.updateOne(query, { $set: newData });
 
-    console.table (result)
+    console.table(result)
 
     if (result) {
       if (result.modifiedCount > 0) {
@@ -160,13 +146,13 @@ export const deleteUser = async (req: Request, res: Response) => {
     }
   } catch (error) {
     if (error instanceof Error) {
-      console.log(`issue with inserting ${error.message}`);
+      console.log(`issue with deleting ${error.message}`);
     }
     else {
       console.log(`error with ${error}`)
     }
 
-    res.status(400).send(`Unable to create new user`);
+    res.status(400).send(`Unable to Delete User`);
   }
 
 

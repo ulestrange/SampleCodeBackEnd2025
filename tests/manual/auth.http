@@ -11,35 +11,44 @@ content-type: application/json
 
 { "name" : "una3",
    "phonenumber" : "0871234567",
-   "email" : "john.doe4@mymail.iecom",
+   "email" : "t1@mymail.iecom",
    "dob" : "2001/01/23",
    "silly": "this is not just silly but dangerous",
-   "password" : "password"
+   "password" : "password10"
   }
 
 
 ###
+# @name login
 poST {{endpoint}}/auth HTTP/1.1
 content-type: application/json
 
 { 
-   "email" : "john.doe4@mymail.iecom",
-   "password" : "password"
+   "email" : "t1@mymail.iecom",
+   "password" : "password10"
   }
 
 ###
+@accessToken = {{login.response.body.accessToken}}
+
+
+
 poST {{endpoint}}/auth HTTP/1.1
 content-type: application/json
 
 { 
-   "email" : "joh4@mymail.iecom",
+   "email" : "joe@mymail.iecom",
    "password" : "WRONGpassword"
   }
 ###
-GET {{endpoint}}/auth HTTP/1.1
+
+
+
+DELETE {{endpoint}}/users/adsfasf HTTP/1.1
 content-type: application/json
 
-{ 
-   "email" : "john.doe4@mymail.iecom",
-   "password" : "password"
-  }
+#######
+
+DELETE {{endpoint}}/users/adsfasf HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}

@@ -11,7 +11,6 @@ const router: Router = express.Router();
 
 router.post('/',  handleLogin);
 
-router.get('/',  handleLogin);
 
 
 
