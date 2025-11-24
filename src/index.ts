@@ -1,9 +1,11 @@
 import express, { Application, Request, Response } from "express";
 import morgan from "morgan";
 import userRoutes from './routes/users';
-import authRoutes from './routes/auth'
+import authRoutes from './routes/auth';
+
 
 import { initDb } from './database';
+import cors from 'cors';
 import { authenticateKey } from "./middleware/auth.middleware";
 
 
@@ -11,6 +13,13 @@ import { authenticateKey } from "./middleware/auth.middleware";
 export const app: Application = express();
 
 initDb()
+
+const corsOptions = {
+  origin: ["http://localhost:4200", "http://localhost:3000", "https://localhost:4200"],
+  credentials: true,
+};
+
+app.use(cors<Request>(corsOptions));
 
 app.use(express.json());
 
