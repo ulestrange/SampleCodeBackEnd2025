@@ -12,6 +12,24 @@ export const authenticateKey = async (req: Request, res: Response, next: NextFun
     next();
 }
 
+export const isAdmin = async (
+    req: Request,
+    res: Response,
+    next: NextFunction) => {
+
+    const role = res.locals?.payload?.role
+
+    console.log('role is ' + role)
+
+    if (role && role == 'admin') {
+        next();
+    }
+    else {
+        res.status(403).json({ "opps": "not an admin" });
+    }
+
+}
+
 
 
 export const validJWTProvided = async (
@@ -35,10 +53,8 @@ export const validJWTProvided = async (
         return;
     }
     const secret = process.env.JWTSECRET || "not very secret";
-    console.log(secret)
 
     try {
-        console.log(token);
         const payload = jwtVerify(token, secret);
         res.locals.payload = payload;
         next();

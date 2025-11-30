@@ -28,7 +28,7 @@ export const getUserById = async (req: Request, res: Response) => {
   let id: string = req.params.id;
   try {
     const query = { _id: new ObjectId(id) };
-    const user = (await collections.users?.findOne(query, {projection :{hashedPassord:0}})) as unknown as User;
+    const user = (await collections.users?.findOne(query, {projection :{hashedPassword:0}})) as unknown as User;
 
     if (user) {
       res.status(200).send(user);
@@ -60,7 +60,7 @@ export const createUser = async (req: Request, res: Response) => {
     // belongs to them
 
     const newUser: User = {
-      name: name, phonenumber: phonenumber, email: email, dob: dob,
+      name: name, phonenumber: phonenumber, email: email, dob: dob, role: role,
       dateJoined: new Date(), lastUpdated: new Date()
     }
     newUser.hashedPassword = await argon2.hash(req.body.password)

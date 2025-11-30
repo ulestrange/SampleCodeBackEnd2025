@@ -36,8 +36,8 @@ poST {{endpoint}}/auth HTTP/1.1
 content-type: application/json
 
 { 
-   "email" : "t1@mymail.iecom",
-   "password" : "password10"
+   "email" : "john.doe9ju@mymail.iecom",
+   "password" : "password"
   }
 
 ###

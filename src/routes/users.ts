@@ -1,7 +1,7 @@
 import express, {Router} from 'express';
 import {validate} from '../middleware/validate.middleware';
 import {createUserSchema, updateUserSchema}  from '../models/user';
-import {validJWTProvided} from '../middleware/auth.middleware'
+import {isAdmin, validJWTProvided} from '../middleware/auth.middleware'
 
 import {
   getUsers,
@@ -17,6 +17,6 @@ router.get('/', getUsers);
 router.get('/:id', getUserById);
 router.post('/', validate(createUserSchema), createUser);
 router.put('/:id', validate(updateUserSchema), updateUser);
-router.delete('/:id', validJWTProvided, deleteUser);
+router.delete('/:id', validJWTProvided, isAdmin, deleteUser);
 
 export default router;

@@ -10,10 +10,11 @@ content-type: application/json
 
 { "name" : "una3",
    "phonenumber" : "0871234567",
-   "email" : "john.doe3@mymail.iecom",
+   "email" : "john.doe9ju@mymail.iecom",
    "dob" : "2001/01/23",
    "silly": "this is not just silly but dangerous",
-   "password" : "password"
+   "password" : "password",
+   "role" : "admin"
   }
   
   
