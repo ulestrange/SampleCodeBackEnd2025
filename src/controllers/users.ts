@@ -46,7 +46,7 @@ export const getUserById = async (req: Request, res: Response) => {
 };
 
 export const createUser = async (req: Request, res: Response) => {
-  const { name, phonenumber, email, dob, password } = req.body;
+  const { name, phonenumber, email, dob, role} = req.body;
   try {
     const existingUser = await collections.users?.findOne({ email: req.body.email })
 

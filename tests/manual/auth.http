@@ -17,6 +17,18 @@ content-type: application/json
    "password" : "password10"
   }
 
+###
+
+POST {{endpoint}}/users HTTP/1.1
+content-type: application/json
+
+{ "name" : "una3",
+   "phonenumber" : "0871234567",
+   "email" : "test@test.ie",
+   "dob" : "2001/01/23",
+   "silly": "this is not just silly but dangerous",
+   "password" : "testtest"
+  }
 
 ###
 # @name login

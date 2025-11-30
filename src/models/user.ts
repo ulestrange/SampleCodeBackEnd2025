@@ -1,6 +1,7 @@
 import { ObjectId } from "mongodb";
 import { z } from 'zod';
 
+enum role {admin, editor, ''}
 
 export interface User {
     id?: ObjectId;
@@ -11,7 +12,8 @@ export interface User {
     dateJoined?: Date,
     lastUpdated?: Date,
     password?: string,
-    hashedPassword?: string
+    hashedPassword?: string,
+    role? : string
 }
 
 export const createUserSchema = z.object({
@@ -22,7 +24,8 @@ export const createUserSchema = z.object({
     phonenumber: z.string().
  regex(/^08[3-9]\d{7}$/, {
   message: "Invalid Irish mobile number. Must start with 08followed by 3–9 and 7 digits."}),
-  password: z.string().max(64)
+  password: z.string().max(64),
+  role: z.enum(['admin', 'editor', ''])
   
 
 });
